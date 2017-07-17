@@ -15,8 +15,9 @@ HEIGHT = 480
 SPEED_X = 0.5
 SPEED_Y = 0.5
 K = 0.5
- 
-# Clases
+
+# ---------------------------------------------------------------------
+ # Clases
 # ---------------------------------------------------------------------
  
 class Bola(pygame.sprite.Sprite):
@@ -92,7 +93,6 @@ class Pala(pygame.sprite.Sprite):
                 self.rect.centery -= self.speed * time
  
 # ---------------------------------------------------------------------
- 
 # Funciones
 # ---------------------------------------------------------------------
  
@@ -140,7 +140,6 @@ def main():
             if eventos.type == QUIT:
                 sys.exit(0)
  
-
         ## Update ball position, player and enemy. It returns the score of both players!
         puntos = bola.actualizar(time, pala_jug, pala_cpu, puntos)
 
