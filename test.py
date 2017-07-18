@@ -141,7 +141,7 @@ def main():
             if eventos.type == QUIT:
                 sys.exit(0)
  
-        ## Update ball position, player and enemy. It returns the score of both players!
+        ## Update ball position based on collision with walls, player and enemy. It returns the score of both players!
         scores = ball.update(time, racket_jug, racket_cpu, scores)
 
         ## Update player position --> key
