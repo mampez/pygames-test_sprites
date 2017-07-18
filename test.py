@@ -14,13 +14,13 @@ HEIGHT = 480
 
 SPEED_X = 0.5
 SPEED_Y = 0.5
-K = 0.5
+K = 5
 
 # ---------------------------------------------------------------------
  # Clases
 # ---------------------------------------------------------------------
  
-class ball(pygame.sprite.Sprite):
+class ballClass(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self) ## Inheritance: Call the parent class (Sprite) constructor
         self.image = load_image("images/ball.png", True)
@@ -30,8 +30,8 @@ class ball(pygame.sprite.Sprite):
         self.speed = [SPEED_X, SPEED_Y]        ## x,y speed
  
     def update(self, time, racket_jug, racket_cpu, scores):
-
-        """ We calculate the ball position based on  e = v*t  """
+        """ We calculate the ball 
+            position based on  e = v*t  """
         self.rect.centerx += self.speed[0] * time
         self.rect.centery += self.speed[1] * time
 
@@ -40,14 +40,12 @@ class ball(pygame.sprite.Sprite):
             scores[1] += 1
             self.rect.centerx = WIDTH / 2
             self.rect.centery = HEIGHT / 2
-            self.speed = [SPEED_X + K * random.random(), SPEED_Y + K * random.random()]
-            print self.speed
+            self.speed = [SPEED_X , SPEED_Y]
         if self.rect.right >= WIDTH:
             scores[0] += 1
             self.rect.centerx = WIDTH / 2
             self.rect.centery = HEIGHT / 2
-            self.speed = [SPEED_X + K * random.random(), SPEED_Y + K * random.random()]
-            print self.speed
+            self.speed = [SPEED_X , SPEED_Y]
 
         ## Collisions!
 
@@ -58,6 +56,7 @@ class ball(pygame.sprite.Sprite):
         if self.rect.top <= 0 or self.rect.bottom >= HEIGHT:
             self.speed[1] = -self.speed[1]
             self.rect.centery += self.speed[1] * time
+
         ## Collision JUGADORES
         if pygame.sprite.collide_rect(self, racket_jug):
             self.speed[0] = -self.speed[0]
@@ -68,16 +67,16 @@ class ball(pygame.sprite.Sprite):
 
         return scores
  
-class racket(pygame.sprite.Sprite):
+class racketClass(pygame.sprite.Sprite):
     def __init__(self, x):
-        pygame.sprite.Sprite.__init__(self)		## Inheritance: Call the parent class (Sprite) constructor
+        pygame.sprite.Sprite.__init__(self)     ## Inheritance: Call the parent class (Sprite) constructor
         self.image = load_image("images/racket.png")
         self.rect = self.image.get_rect()
         self.rect.centerx = x
         self.rect.centery = HEIGHT / 2
         self.speed = 1
  
-    def mover(self, time, keys):
+    def move(self, time, keys):
         if self.rect.top >= 0:
             if keys[K_UP]:
                 self.rect.centery -= self.speed * time
@@ -88,9 +87,11 @@ class racket(pygame.sprite.Sprite):
     def ia(self, time, ball):
         if ball.speed[0] >= 0 and ball.rect.centerx >= WIDTH/2:
             if self.rect.centery < ball.rect.centery:
-                self.rect.centery += self.speed * time
+                self.rect.centery += self.speed * time 
             if self.rect.centery > ball.rect.centery:
-                self.rect.centery -= self.speed * time
+                self.rect.centery -= self.speed * time 
+
+          
  
 # ---------------------------------------------------------------------
 # Funciones
@@ -127,9 +128,9 @@ def main():
     background_image = load_image('images/fondo_pong.png')
 
     ## Call objets: ball, player and ball
-    ball = ball()
-    racket_jug = racket(30)
-    racket_cpu = racket(WIDTH - 30)
+    ball = ballClass()
+    racket_jug = racketClass(30)
+    racket_cpu = racketClass(WIDTH - 30)
  
     clock = pygame.time.Clock()
  
@@ -144,7 +145,7 @@ def main():
         scores = ball.update(time, racket_jug, racket_cpu, scores)
 
         ## Update player position --> key
-        racket_jug.mover(time, keys)
+        racket_jug.move(time, keys)
 
         ## Update cpu position --> ia
         racket_cpu.ia(time, ball)
@@ -154,10 +155,10 @@ def main():
         p_cpu, p_cpu_rect = crear_texto(str(scores[1]), WIDTH-WIDTH/4, 40)
 
         ## Re-draw elements
-        screen.blit(background_image, (0, 0))       	## Background
-        screen.blit(p_jug, p_jug_rect)              	## Player puntuation
-        screen.blit(p_cpu, p_cpu_rect)              	## CPU puntuations
-        screen.blit(ball.image, ball.rect)          	## Ball
+        screen.blit(background_image, (0, 0))           ## Background
+        screen.blit(p_jug, p_jug_rect)                  ## Player puntuation
+        screen.blit(p_cpu, p_cpu_rect)                  ## CPU puntuations
+        screen.blit(ball.image, ball.rect)              ## Ball
         screen.blit(racket_jug.image, racket_jug.rect)  ## racket
         screen.blit(racket_cpu.image, racket_cpu.rect)  ## CPU
 
