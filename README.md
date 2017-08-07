@@ -1,2 +1,4 @@
 # pygames-test_sprites
-pygames!
+
+
+Example codes to test pygame module and simple physics.
