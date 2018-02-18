@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Demo basada en http://razonartificial.com/tutoriales-pygame/
+# Based on en http://razonartificial.com/tutoriales-pygame/
  
-# Módulos
+# Module
 import sys, pygame
 from pygame.locals import *
 import random
  
-# Constantes
+# Constants
 WIDTH = 640
 HEIGHT = 480
 
